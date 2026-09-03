@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <title>Lista de Funcionários</title>
+</head>
+<body>
+
+  <header class="top-bar">
+    <div class="header-content">
+      <span class="material-symbols-outlined onibus-icon">directions_bus</span>
+    </div>
+  </header>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Funcionário</th>
+        <th>Gênero</th>
+        <th>Valor da passagem</th>
+        <th>Quantidade de ônibus</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody id="lista-funcionarios">
+    <tr class="linha-dado">
+  <td>
+    <input type="text" class="input-tabela input-nome" placeholder="Nome do funcionário" autocomplete="off" />
+  </td>
+  <td class="col-genero">
+    <span class="genero-tag">-</span>
+  </td>
+  <td>
+    <div class="container-valores">
+      <div class="input-valor-group">
+        <span class="prefixo-moeda">R$</span>
+        <input type="number" class="input-tabela input-valor" step="0.01" min="0" placeholder="0,00" />
+      </div>
+    </div>
+  </td>
+  <td>
+    <div class="input-valor-group">
+      <input type="number" class="input-tabela input-quantidade" step="1" min="1" value="1" placeholder="1" />
+    </div>
+  </td>
+  <td class="col-acoes">
+    <span class="tooltip-container" data-tooltip="Remover funcionário">
+      <span class="material-symbols-outlined icone-delete">delete</span>
+    </span>
+    <span class="tooltip-container btn-editar" data-tooltip="Salvar alterações">
+      <span class="material-symbols-outlined icone-edit">check</span>
+    </span>
+  </td>
+</tr>
+      <tr class="linha-adicionar">
+        <td>
+          <button type="button" id="adicionar-funcionario" class="adicionar">+ Adicionar Funcionário</button>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="5">
+          <strong>Valor Total:</strong> <span id="valor-total">R$ 0,00</span>
+        </td>
+      </tr>
+      <tr class="linha-calcular">
+        <td colspan="5">
+          <a href="calculo.html" class="botao-calcular">Calcular Distribuição</a>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+</body>
+</html>
