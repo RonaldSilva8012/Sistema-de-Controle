@@ -1,22 +1,43 @@
-Calculadora de Vale-Transporte e Distribuição de Passagens
-Aplicação web interativa para controle, gerenciamento e cálculo de gastos com passagens de transporte público para equipes e colaboradores. O sistema permite listar funcionários, definir tarifas individuais e calcular em tempo real o custo total acumulado.
+Calculadora de Vale-Transporte & Distribuição de Troco 🚌💵
+Criei esse projeto para resolver uma dor de cabeça clássica de RH e financeiro: fechar os gastos de vale-transporte da equipe e descobrir exatamente quanto dinheiro físico sacar no banco para pagar todo mundo sem faltar uma única moeda.
 
-Funcionalidades
-Gerenciamento Dinâmico de Funcionários: Adicione novas linhas de colaboradores à lista em tempo real com apenas um clique.
+A aplicação permite cadastrar cada colaborador, adicionar múltiplos valores de passagem por pessoa, salvar tudo na nuvem e, no final, calcular a distribuição exata de quais cédulas e moedas você precisa entregar para cada um.
 
-Modo Edição e Bloqueio Seguro: Permite alternar os campos entre modo de edição e salvamento (via botão dedicado ou teclando Enter), prevenindo edições acidentais após o cadastro.
+O que o sistema faz na prática
+Adição dinâmica de funcionários: Dá para incluir quantos colaboradores precisar em tempo real e configurar valores de ônibus diferentes para quem pega mais de uma condução.
 
-Remoção com Confirmação: Sistema de exclusão com modal de confirmação para evitar perdas acidentais de registros.
+Descobre o gênero pelo nome: O sistema consome uma API que tenta adivinhar o gênero com base no primeiro nome e já coloca o ícone visual correspondente na hora.
 
-Cálculo Automático de Total: Recálculo em tempo real do custo acumulado sempre que uma passagem é digitada ou quando um colaborador é removido da listagem.
+Trava de segurança nas linhas: Dá para alternar entre editar e salvar (seja clicando no botão ou dando Enter), evitando alterar valores por engano depois de preenchido.
 
-Interface Moderna e Responsiva: Estilização com cantos arredondados, sombreamento suave (box-shadow), ícones visuais interativos e tooltips informativos.
+Soma em tempo real: Qualquer centavo digitado ou linha removida já recalcula o total geral instantaneamente no rodapé.
 
-Tecnologias Utilizadas
-HTML5: Estruturação semântica de formulários e tabelas.
+Cálculo do troco (notas e moedas): O coração da aplicação. O sistema pega o valor final e quebra na menor quantidade de notas (de 100 até 2 reais) e moedas (de 1 real até 5 centavos), fazendo o cálculo todo em centavos para o JavaScript não se perder nas casas decimais.
 
-CSS3: Flexbox, pseudo-elementos (tooltips customizados), efeitos de transição e estilização visual.
+Banco de dados na nuvem: Os dados são enviados e salvos diretamente no Supabase, permitindo listar tudo em ordem alfabética na tela de resultado e excluir registros com um clique.
 
-JavaScript (ES6+): Manipulação de DOM, delegação de eventos para elementos criados dinamicamente e cálculos monetários formatados em padrão BRL (Intl.NumberFormat / toLocaleString).
+O que usei para construir
+HTML5 & CSS3: Estrutura das páginas, formulários, tabelas customizadas, efeito zebrado, responsividade e tooltips feitos na mão.
 
-Google Fonts & Icons: Tipografia Josefin Sans e biblioteca Material Symbols Outlined.
+JavaScript Puro (Vanilla ES6+): Toda a manipulação do DOM, eventos em tempo real, chamadas assíncronas com async/await e a lógica matemática de divisão do dinheiro.
+
+Supabase (PostgreSQL): Banco de dados relacional na nuvem para persistir os colaboradores (funcionarios_vt) e gerenciar o CRUD.
+
+Genderize.io API: Para identificar o gênero dos nomes cadastrados.
+
+Google Fonts & Material Symbols: Fonte Josefin Sans e os ícones visuais da interface.
+
+O que estou construindo agora (Próximos passos)
+Quero tirar a aplicação da dependência de BaaS e colocar um backend próprio rodando em Python puro para gerenciar acessos:
+
+Servidor Python na unha: Criar um backend usando apenas bibliotecas padrão do Python (como http.server) para entender a fundo como funcionam sockets, requisições HTTP, leitura de JSON bruto e regras de CORS.
+
+Fluxo de autorização por e-mail:
+
+O usuário solicita cadastro informando nome e e-mail.
+
+O Python gera um token único e temporário e salva o usuário com status "pendente".
+
+O sistema dispara um e-mail automático via SMTP para o administrador com um link seguro.
+
+O admin clica no link e o acesso é liberado no banco.
