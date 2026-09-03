@@ -1,4 +1,5 @@
 Calculadora de Vale-Transporte & Distribuição de Troco 🚌💵
+
 Criei esse projeto para resolver uma dor de cabeça clássica de RH e financeiro: fechar os gastos de vale-transporte da equipe e descobrir exatamente quanto dinheiro físico sacar no banco para pagar todo mundo sem faltar uma única moeda.
 
 A aplicação permite cadastrar cada colaborador, adicionar múltiplos valores de passagem por pessoa, salvar tudo na nuvem e, no final, calcular a distribuição exata de quais cédulas e moedas você precisa entregar para cada um.
