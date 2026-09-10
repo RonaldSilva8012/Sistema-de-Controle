@@ -28,17 +28,3 @@ Genderize.io API: Para identificar o gênero dos nomes cadastrados.
 
 Google Fonts & Material Symbols: Fonte Josefin Sans e os ícones visuais da interface.
 
-O que estou construindo agora (Próximos passos)
-Quero tirar a aplicação da dependência de BaaS e colocar um backend próprio rodando em Python puro para gerenciar acessos:
-
-Servidor Python na unha: Criar um backend usando apenas bibliotecas padrão do Python (como http.server) para entender a fundo como funcionam sockets, requisições HTTP, leitura de JSON bruto e regras de CORS.
-
-Fluxo de autorização por e-mail:
-
-O usuário solicita cadastro informando nome e e-mail.
-
-O Python gera um token único e temporário e salva o usuário com status "pendente".
-
-O sistema dispara um e-mail automático via SMTP para o administrador com um link seguro.
-
-O admin clica no link e o acesso é liberado no banco.
