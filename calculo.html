@@ -5,20 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="icon" type="image/png" href="img/icon.jpg">
   <title>Cálculo de Distribuição</title>
 </head>
-<body>
+<body class="page-calculo">
 
   <header class="top-bar">
     <div class="logo-container">
       <span class="material-symbols-outlined onibus-icon">directions_bus</span>
-      <!-- <span class="nome-sistema">Sistema de VT</span> -->
+      <span class="nome-sistema style="@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');">TRANSPORED</span>
     </div>
 
     <nav class="nav-links">
       <ul>
         <li>
-          <a href="teste.html" class="nav-item">Distribuição</a>
+          <a href="teste.html" class="nav-item">Adicionar Funcionario</a>
         </li>
         <li>
           <a href="index.html" class="btn-sair">
@@ -46,6 +47,15 @@
       </tr>
     </tbody>
   </table>
+
+  <!-- Container do Card posicionado logo abaixo da tabela -->
+    <!-- <div class="valor-total" style="display: flex; justify-content: flex-end; margin-top: 20px;">
+      <div style="background: #ffffff; border-radius: 8px; padding: 16px 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 5px solid #d32f2f; text-align: right; min-width: 200px;">
+        <span style="font-size: 0.85rem; color: #666; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 4px;">Valor Total Para Saque: </span>
+        <strong id="card-valor-total" style="font-size: 1.6rem; color: #111;">R$ 0,00</strong>
+      </div>
+    </div> -->
+  
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="script.js"></script>
 </body>

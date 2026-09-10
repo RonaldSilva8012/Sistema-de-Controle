@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="icon" type="image/png" href="../img/icon.jpg">
+  <title>Painel de Controle de Usuários</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f9; color: #333; }
+    h1 { color: #111; margin-bottom: 20px; }
+    
+    .card-painel { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 25px; }
+    .card-titulo { font-size: 1.2rem; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; }
+    .badge { padding: 4px 10px; border-radius: 12px; font-size: 0.85rem; color: #fff; }
+    .badge-pendente { background: #ffc107; color: #000; }
+    .badge-aprovado { background: #28a745; }
+    .badge-recusado { background: #dc3545; }
+
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { padding: 12px; border-bottom: 1px solid #eee; text-align: left; }
+    th { background-color: #f8f9fa; color: #555; }
+
+    .btn { padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin-right: 5px; }
+    .btn-aprovar { background: #28a745; color: white; }
+    .btn-recusar { background: #dc3545; color: white; }
+    .btn-pendente { background: #ffc107; color: black; }
+    .btn:hover { opacity: 0.85; }
+  </style>
+</head>
+
+<body>
+  
+  <header class="top-bar">
+    <div class="logo-container">
+      <span class="material-symbols-outlined onibus-icon">directions_bus</span>
+      <span class="nome-sistema" style="@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');">TRANSPORED</span>
+    </div>
+    <nav class="nav-links">
+      <ul>
+        <li>
+          <a href="dados.html" class="nav-item">Gerenciamento de Administradores</a>
+        </li>
+        <li>
+          <a href="#" id="btn-logout" class="btn-sair">
+            <span class="material-symbols-outlined icone-sair">logout</span>
+            <span>Desconectar</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <h1>Painel de Gerenciamento de Usuários</h1>
+
+  <!-- SEÇÃO 1: USUÁRIOS PENDENTES -->
+  <div class="card-painel">
+    <div class="card-titulo">
+      Solicitações Pendentes
+      <span class="badge badge-pendente" id="count-pendentes">0</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>E-mail</th>
+          <th>Data de Solicitação</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody id="tabela-pendentes">
+        <tr><td colspan="4">Carregando...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SEÇÃO 2: USUÁRIOS APROVADOS -->
+  <div class="card-painel">
+    <div class="card-titulo">
+      Usuários Aprovados (Acesso Ativo)
+      <span class="badge badge-aprovado" id="count-aprovados">0</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>E-mail</th>
+          <th>Status Atual</th>
+          <th>Ações de Controle</th>
+        </tr>
+      </thead>
+      <tbody id="tabela-aprovados">
+        <tr><td colspan="4">Carregando...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SEÇÃO 3: USUÁRIOS RECUSADOS -->
+  <div class="card-painel">
+    <div class="card-titulo">
+      Usuários Recusados / Inativos
+      <span class="badge badge-recusado" id="count-recusados">0</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>E-mail</th>
+          <th>Status Atual</th>
+          <th>Ações de Controle</th>
+        </tr>
+      </thead>
+      <tbody id="tabela-recusados">
+        <tr><td colspan="4">Carregando...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script src="aprovacao.js"></script>
+</body>
+</html>

@@ -8,6 +8,89 @@ const tbody = document.getElementById('lista-funcionarios');
 const adicionarFuncionarioBtn = document.getElementById('adicionar-funcionario');
 const totalDisplay = document.getElementById('valor-total');
 const btnCalcular = document.getElementById('btn-calcular');
+const tbodyResultado = document.getElementById('tabela-resultado');
+
+const btnSolicitar = document.getElementById('btn-solicitar');
+const btnEntrar = document.getElementById('btn-entrar');
+
+if (btnSolicitar) {
+  btnSolicitar.addEventListener('click', async () => {
+    const nomeInput = document.getElementById('nome');
+    const emailInput = document.getElementById('email');
+
+    const nome = nomeInput ? nomeInput.value.trim() : '';
+    const email = emailInput ? emailInput.value.trim().toLowerCase() : '';
+
+    if (!nome || !email) {
+      alert('Por favor, preencha o nome completo e o e-mail para solicitar acesso.');
+      return;
+    }
+
+    // 1. Verifica se o e-mail já existe
+    const { data: existente } = await _supabase
+      .from('usuarios')
+      .select('*')
+      .eq('email', email)
+      .maybeSingle();
+
+    if (existente) {
+      alert('Este e-mail já solicitou acesso ou possui uma conta.');
+      return;
+    }
+
+    // 2. Insere novo registro com status "pendente"
+    const { error } = await _supabase
+      .from('usuarios')
+      .insert([{ nome, email, status: 'pendente' }]);
+
+    if (error) {
+      alert('Erro ao solicitar acesso: ' + error.message);
+      return;
+    }
+
+    alert('Solicitação enviada com sucesso! Aguarde a aprovação do administrador.');
+    nomeInput.value = '';
+    emailInput.value = '';
+  });
+}
+
+if (btnEntrar) {
+  btnEntrar.addEventListener('click', async () => {
+    const nomeInput = document.getElementById('nome');
+    const emailInput = document.getElementById('email');
+
+    const nome = nomeInput ? nomeInput.value.trim().toUpperCase() : '';
+    const email = emailInput ? emailInput.value.trim().toLowerCase() : '';
+
+    if (!nome || !email) {
+      alert('Por favor, informe seu nome e e-mail para entrar.');
+      return;
+    }
+
+    // 1. Consulta o usuário no Supabase validando E-MAIL E NOME
+    const { data: usuario, error } = await _supabase
+      .from('usuarios')
+      .select('*')
+      .eq('email', email)
+      .ilike('nome', nome) // ilike compara o nome ignorando maiúsculas e minúsculas
+      .maybeSingle();
+
+    if (error || !usuario) {
+      alert('Dados incorretos (nome ou e-mail inválidos) ou cadastro inexistente.');
+      return;
+    }
+
+    // 2. Valida o status do cadastro
+    if (usuario.status === 'aprovado') {
+      localStorage.setItem('usuario_email', usuario.email);
+      window.location.href = 'calculo.html';
+    } else if (usuario.status === 'pendente') {
+      alert('Acesso negado: Sua solicitação ainda está aguardando aprovação.');
+    } else {
+      alert('Acesso negado: Solicitação recusada ou inativa.');
+    }
+  });
+}
 
 // Consulta de gênero via API externa com ícones
 async function descobrirSexo(nomeCompleto) {
@@ -136,7 +219,7 @@ async function alternarEdicao(linha) {
   }
 }
 
-// Adiciona nova linha (apenas se o botão existir na página)
+// Adiciona nova linha na tabela de cadastro
 if (adicionarFuncionarioBtn && tbody) {
   adicionarFuncionarioBtn.addEventListener('click', function () {
     const linhaBotao = document.querySelector('.linha-adicionar');
@@ -177,7 +260,7 @@ if (adicionarFuncionarioBtn && tbody) {
   });
 }
 
-// Eventos da tabela de cadastro (apenas se a tabela existir)
+// Eventos da tabela de cadastro
 if (tabela) {
   tabela.addEventListener('click', function (event) {
     const botaoDelete = event.target.closest('.icone-delete');
@@ -226,6 +309,22 @@ if (tabela) {
 // Envio dos dados para o Supabase
 if (btnCalcular) {
   btnCalcular.addEventListener('click', async function () {
+    const emailUsuarioLogado = localStorage.getItem('usuario_email');
+
+    // 1. Busca o ID do usuário logado na tabela "usuarios"
+    let userIdLogado = null;
+    if (emailUsuarioLogado) {
+      const { data: usuario } = await _supabase
+        .from('usuarios')
+        .select('id')
+        .eq('email', emailUsuarioLogado)
+        .maybeSingle();
+
+      if (usuario) {
+        userIdLogado = usuario.id;
+      }
+    }
+
     const listaFuncionarios = [];
     const linhas = document.querySelectorAll('.linha-dado');
 
@@ -250,7 +349,8 @@ if (btnCalcular) {
         listaFuncionarios.push({
           nome: nome,
           quantidade_onibus: quantidadeOnibus,
-          valor_total: totalLinha
+          valor_total: totalLinha,
+          user_id: userIdLogado // <--- Salva automaticamente o ID de quem está cadastrando
         });
       }
     });
@@ -279,61 +379,11 @@ if (btnCalcular) {
     }
   });
 }
-// Função para buscar os dados no Supabase e renderizar em calculo.html
-async function carregarDadosCalculo() {
-  const tbodyResultado = document.getElementById('tabela-resultado');
-  
-  // Se esse elemento não existir, significa que não estamos em calculo.html
-  if (!tbodyResultado) return;
 
-  try {
-    // 1. Busca todos os registros da tabela ordenados pelos mais recentes
-    const { data: funcionarios, error } = await _supabase
-      .from('funcionarios_vt')
-      .select('*')
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      console.error('Erro ao buscar dados:', error);
-      tbodyResultado.innerHTML = `<tr><td colspan="2">Erro ao carregar dados do banco.</td></tr>`;
-      return;
-    }
-
-    // 2. Verifica se a tabela está vazia
-    if (!funcionarios || funcionarios.length === 0) {
-      tbodyResultado.innerHTML = `<tr><td colspan="2">Nenhum registro encontrado.</td></tr>`;
-      return;
-    }
-
-    // 3. Limpa o placeholder atual
-    tbodyResultado.innerHTML = '';
-
-    // 4. Percorre os funcionários retornados
-    funcionarios.forEach(func => {
-      const linha = document.createElement('tr');
-      linha.innerHTML = `
-        <td>${func.nome}</td>
-        <td>R$ ${Number(func.valor_total).toFixed(2).replace('.', ',')}</td>
-      `;
-      tbodyResultado.appendChild(linha);
-    });
-
-    console.log('Dados carregados com sucesso:', funcionarios);
-
-  } catch (err) {
-    console.error('Falha ao conectar no Supabase:', err);
-  }
-}
-
-// Dispara a consulta assim que a página terminar de carregar
-document.addEventListener('DOMContentLoaded', carregarDadosCalculo);
-
-// 1. Algoritmo para calcular a menor quantidade de cédulas e moedas
+// Algoritmo para calcular a menor quantidade de cédulas e moedas
 function calcularTroco(valorReais) {
-  // Converte para centavos inteiros
   let centavos = Math.round(valorReais * 100);
 
-  // Lista de denominações em centavos
   const denominacoes = [
     { nome: 'R$ 100', valor: 10000, tipo: 'nota' },
     { nome: 'R$ 50',  valor: 5000,  tipo: 'nota' },
@@ -353,7 +403,7 @@ function calcularTroco(valorReais) {
   denominacoes.forEach(item => {
     if (centavos >= item.valor) {
       const qtd = Math.floor(centavos / item.valor);
-      centavos = centavos % item.valor; // O que sobrou para as próximas notas/moedas
+      centavos = centavos % item.valor;
 
       resultado.push({
         rotulo: item.nome,
@@ -366,64 +416,11 @@ function calcularTroco(valorReais) {
   return resultado;
 }
 
-// 2. Busca os dados no Supabase e renderiza com a distribuição detalhada
+// Busca os dados no Supabase em ordem alfabética e renderiza na tela calculo.html
 async function carregarDadosCalculo() {
-  const tbodyResultado = document.getElementById('tabela-resultado');
   if (!tbodyResultado) return;
 
   try {
-    const { data: funcionarios, error } = await _supabase
-      .from('funcionarios_vt')
-      .select('*')
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      console.error('Erro ao buscar dados:', error);
-      tbodyResultado.innerHTML = `<tr><td colspan="2">Erro ao carregar dados.</td></tr>`;
-      return;
-    }
-
-    if (!funcionarios || funcionarios.length === 0) {
-      tbodyResultado.innerHTML = `<tr><td colspan="2">Nenhum registro encontrado.</td></tr>`;
-      return;
-    }
-
-    tbodyResultado.innerHTML = '';
-
-    funcionarios.forEach(func => {
-      // Executa o algoritmo do troco para cada funcionário
-      const distribuicao = calcularTroco(func.valor_total);
-
-      // Formata a lista visual de notas/moedas
-      const textoDistribuicao = distribuicao
-        .map(d => `${d.quantidade}x ${d.rotulo}`)
-        .join(', ');
-
-      const linha = document.createElement('tr');
-      linha.innerHTML = `
-        <td><strong>${func.nome}</strong></td>
-        <td>
-          <div><strong>Total:</strong> R$ ${Number(func.valor_total).toFixed(2).replace('.', ',')}</div>
-          <small style="color: #666;">${textoDistribuicao}</small>
-        </td>
-      `;
-      tbodyResultado.appendChild(linha);
-    });
-
-  } catch (err) {
-    console.error('Falha de conexão com o Supabase:', err);
-  }
-}
-
-document.addEventListener('DOMContentLoaded', carregarDadosCalculo);
-
-// 2. Busca os dados no Supabase em ordem alfabética e renderiza
-async function carregarDadosCalculo() {
-  const tbodyResultado = document.getElementById('tabela-resultado');
-  if (!tbodyResultado) return;
-
-  try {
-    // .order('nome', { ascending: true }) ordena de A a Z
     const { data: funcionarios, error } = await _supabase
       .from('funcionarios_vt')
       .select('*')
@@ -449,7 +446,7 @@ async function carregarDadosCalculo() {
         .join(', ');
 
       const linha = document.createElement('tr');
-      linha.setAttribute('data-id', func.id); // Guarda o ID do banco na linha
+      linha.setAttribute('data-id', func.id);
 
       linha.innerHTML = `
         <td><strong>${func.nome}</strong></td>
@@ -471,8 +468,26 @@ async function carregarDadosCalculo() {
   }
 }
 
-// 3. Listener para remover o registro diretamente do Supabase
-const tbodyResultado = document.getElementById('tabela-resultado');
+// Função isolada para atualizar a soma geral no Card
+function atualizarSomaCard(funcionarios) {
+  const elTotal = document.getElementById('card-valor-total');
+  if (!elTotal) return;
+
+  const total = funcionarios.reduce((acc, func) => {
+    const val = Number(func.valor_total ?? 0);
+    return acc + (isNaN(val) ? 0 : val);
+  }, 0);
+
+  elTotal.textContent = total.toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  });
+}
+
+// Dispara a consulta quando o DOM carrega
+document.addEventListener('DOMContentLoaded', carregarDadosCalculo);
+
+// Listener para remover o registro diretamente do Supabase em calculo.html
 if (tbodyResultado) {
   tbodyResultado.addEventListener('click', async function (event) {
     const botaoDelete = event.target.closest('.icone-delete-db');
@@ -485,7 +500,6 @@ if (tbodyResultado) {
     if (!confirmacao) return;
 
     try {
-      // Deleta a linha onde a coluna id for igual ao id guardado no HTML
       const { error } = await _supabase
         .from('funcionarios_vt')
         .delete()
@@ -496,10 +510,8 @@ if (tbodyResultado) {
         return;
       }
 
-      // Remove visualmente a linha da tabela
       linha.remove();
 
-      // Se a tabela ficar vazia após remover
       if (tbodyResultado.children.length === 0) {
         tbodyResultado.innerHTML = `<tr><td colspan="3">Nenhum registro encontrado.</td></tr>`;
       }

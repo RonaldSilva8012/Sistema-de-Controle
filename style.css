@@ -24,7 +24,7 @@
 
 
         body {
-        background-image: url('img/fundo.jpg');
+        /* background-image: url('img/fundo.jpg'); */
         background-size: cover;       /* Cobre toda a tela sem distorcer */
         background-position: center;  /* Centraliza a imagem */
         background-repeat: no-repeat; /* Não repete */
@@ -37,6 +37,35 @@
         min-height: 100vh;
         margin: 0;
         padding: 0;
+        }
+
+                /* Contêiner principal */
+        .banner {
+          position: relative;
+          width: 100%;
+          height: 100vh; /* Ajuste a altura conforme necessário */
+          overflow: hidden;
+        }
+
+        /* Configuração do Vídeo de Fundo */
+        #video-fundo {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          min-width: 100%;
+          min-height: 100%;
+          width: auto;
+          height: auto;
+          z-index: 1;
+          transform: translate(-50%, -50%);
+          object-fit: cover; /* Garante que o vídeo cubra toda a área sem distorcer */
+        }
+
+        /* Conteúdo sobreposto ao vídeo */
+        .conteudo {
+          position: relative;
+          z-index: 2; /* Fica acima do vídeo */
+          color: white; /* Cor do texto para dar contraste */
         }
 
        header.top-bar {
@@ -487,3 +516,42 @@ input:-webkit-autofill:active {
 .icone-sair {
   font-size: 18px;
 }
+
+/* Restringe e centraliza a tabela apenas na página de cálculo */
+.page-calculo table {
+  max-width: 1000px; /* Altere este valor para a largura ideal que preferir */
+  margin: 0 auto;    /* Centraliza a tabela na tela */
+}
+
+/* Ajusta o espaçamento interno das células para compactar as linhas */
+.page-calculo th, 
+.page-calculo td {
+  padding: 8px 12px;
+}
+
+/* Reorganiza a proporção das colunas para a página de cálculo */
+.page-calculo th:nth-child(1), .page-calculo td:nth-child(1) { width: 45%; } /* Funcionário */
+.page-calculo th:nth-child(2), .page-calculo td:nth-child(2) { width: 40%; } /* Valor */
+.page-calculo th:nth-child(3), .page-calculo td:nth-child(3) { width: 15%; } /* Ações */
+
+
+/* Correção de Layout da Tabela no Painel Pai */
+.page-dados table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* Força o navegador a respeitar as larguras estipuladas */
+}
+
+.page-dados th, 
+.page-dados td {
+  padding: 12px 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* Evita quebra de linha estranha */
+}
+
+/* Larguras exatas para cada coluna não encavalar */
+.page-dados th:nth-child(1), .page-dados td:nth-child(1) { width: 28%; text-align: left; }   /* Funcionário */
+.page-dados th:nth-child(2), .page-dados td:nth-child(2) { width: 38%; text-align: left; }   /* Cadastrado Por */
+.page-dados th:nth-child(3), .page-dados td:nth-child(3) { width: 18%; text-align: right; }  /* Valor Passagem */
+.page-dados th:nth-child(4), .page-dados td:nth-child(4) { width: 16%; text-align: center; } /* Data */

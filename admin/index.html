@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Aponta para o CSS na raiz -->
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../img/icon.jpg">
+    <title>Acesso Admin Pai - TRANSPORED</title>
+</head>
+<body>
+
+    <div class="banner">
+        <video autoplay muted loop id="video-fundo">
+            <source src="../img/rota-vermelha.mp4" type="video/mp4">
+            Seu navegador não suporta vídeos em HTML5.
+        </video>
+    </div>
+
+    <main class="container">
+        <h2 id="titulo-form" style="@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');">TRANSPORED</h2>
+        
+        <form id="form-login">
+            <div class="form-group" id="grupo-email">
+                <label for="email">Email Admin</label>
+                <input type="email" id="email" name="email" placeholder="Digite seu email de Admin" required>
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+            </div>
+
+            <div id="mensagem-erro" style="color: #d32f2f; font-size: 13px; margin-bottom: 10px; display: none;"></div>
+
+            <div class="form-group" style="display: flex; gap: 10px; justify-content: center;">
+                <button type="submit" id="btn-entrar" class="botao-calcular">Entrar no Painel</button>
+            </div>
+        </form>
+    </main>
+
+    <!-- Bibliotecas e JS da pasta admin -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>
