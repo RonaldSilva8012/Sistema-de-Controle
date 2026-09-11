@@ -6,6 +6,33 @@ const supabaseKey = 'sb_publishable_WUs9ISlOBD6r1oNexYrskw_6IRJfoS6';
 const createClientFunc = window.supabase?.createClient || window.supabaseJs?.createClient;
 const _supabase = createClientFunc(supabaseUrl, supabaseKey);
 
+document.getElementById('form-login')?.addEventListener('submit', async (e) => {
+  e.preventDefault(); // Impede a página de recarregar
+
+  const email = document.getElementById('email').value.trim();
+  const senha = document.getElementById('senha').value;
+  const msgErro = document.getElementById('mensagem-erro');
+
+  // Oculta mensagens de erro anteriores
+  msgErro.style.display = 'none';
+
+  // Realiza a autenticação no Supabase Auth
+  const { data, error } = await _supabase.auth.signInWithPassword({
+    email: email,
+    password: senha
+  });
+
+  if (error) {
+    // Exibe o erro na div de mensagem
+    msgErro.textContent = 'Erro ao entrar: ' + error.message;
+    msgErro.style.display = 'block';
+  } else {
+    // Redireciona para o painel de administração após sucesso
+    window.location.href = 'dados.html'; 
+  }
+});
+
+
 // Algoritmo para decomposição em cédulas e moedas
 function calcularTroco(valorReais) {
   let centavos = Math.round(valorReais * 100);
