@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="valorTotal.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="icon" type="image/png" href="../img/icon.jpg">
+  <title>Resumo de Troco para Saque - TRANSPORED</title>
+</head>
+<body class="page-dados">
+
+  <header class="top-bar">
+    <div class="logo-container">
+      <span class="material-symbols-outlined onibus-icon">directions_bus</span>
+      <span class="nome-sistema">TRANSPORED</span>
+    </div>
+    <nav class="nav-links">
+      <ul>
+        <li>
+          <a href="aprovacao.html" class="nav-item">Aprovações</a>
+        </li>
+        <li>
+          <a href="index.html" id="btn-logout" class="btn-sair">
+            <span class="material-symbols-outlined icone-sair">logout</span>
+            <span>Desconectar</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container-painel" style="max-width: 600px; margin: 40px auto; padding: 0 20px;">
+    
+    <!-- Cabeçalho com Título, Botão de Voltar e Botão de Gerar PDF -->
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px;">
+      
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <a href="dados.html" style="text-decoration: none; color: #666; font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 4px;">
+          <span class="material-symbols-outlined" style="font-size: 1.1rem;">arrow_back</span> Voltar
+        </a>
+        <h2 style="margin: 0; color: #111; font-size: 1.4rem;">Distribuição Total para Saque</h2>
+      </div>
+
+      <!-- Botão para Baixar PDF -->
+      <button id="btn-gerar-pdf" style="background-color: #0d6efd; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 6px; font-weight: 600;">
+        <span class="material-symbols-outlined" style="font-size: 1.2rem;">picture_as_pdf</span>
+        Baixar PDF
+      </button>
+
+    </div>
+
+    <!-- Container onde é renderizado o card com o valor total e imagens das notas -->
+    <div id="containerResumo" class="card-resumo-saque">
+      <p style="text-align: center; color: #666;">Carregando resumo de troco...</p>
+    </div>
+
+  </main>
+
+  <!-- Biblioteca html2pdf CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  
+  <!-- Script do Resumo -->
+  <script src="resumo.js"></script>
+
+</body>
+</html>

@@ -33,6 +33,8 @@
   <main class="container-painel">
     <h2>Gerenciamento de Administradores</h2>
     
+    <div class="tabela-container">
+
     <table class="tabela-dados">
       <thead>
         <tr>
@@ -48,13 +50,15 @@
       </tbody>
     </table>
 
-    <!-- Container do Card posicionado logo abaixo da tabela -->
-    <div class="valor-total" style="display: flex; justify-content: flex-end; margin-top: 20px;">
-      <div style="background: #ffffff; border-radius: 8px; padding: 16px 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-left: 5px solid #d32f2f; text-align: right; min-width: 200px;">
-        <span style="font-size: 0.85rem; color: #666; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 4px;">Valor Total Para Saque: </span>
-        <strong id="card-valor-total" style="font-size: 1.6rem; color: #111;">R$ 0,00</strong>
-      </div>
     </div>
+
+   <!-- Container do Card posicionado logo abaixo da tabela -->
+  <div class="valor-total" style="display: flex; justify-content: flex-end; margin-top: 20px;">
+    <button id="btn-saque-total" style="background: #ffffff; border-radius: 8px; padding: 16px 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: none; border-left: 5px solid #d32f2f; text-align: right; min-width: 200px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; font-family: inherit;">
+      <span style="font-size: 0.85rem; color: #666; font-weight: 600; text-transform: uppercase; display: block; margin-bottom: 4px;">Valor Total Para Saque: </span>
+      <strong id="card-valor-total" style="font-size: 1.6rem; color: #111; display: block;">R$ 0,00</strong>
+    </button>
+  </div>
   </main>
 
   <!-- Modal para Editar Funcionário -->

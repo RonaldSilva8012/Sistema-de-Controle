@@ -1,0 +1,69 @@
+/* Card principal de Resumo */
+.card-resumo-saque {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-left: 5px solid #d32f2f;
+  font-family: inherit;
+}
+
+/* Header interno com o Total */
+.resumo-header {
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+}
+
+.resumo-header .label {
+  font-size: 0.85rem;
+  color: #666;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.resumo-header .valor {
+  font-size: 2rem;
+  color: #111;
+  font-weight: bold;
+}
+
+/* Lista de Notas e Moedas */
+.grid-troco {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.item-nota-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+  font-size: 1.05rem;
+}
+
+.item-nota-row .badge-qtd {
+  background-color: #0d6efd;
+  color: #ffffff;
+  font-weight: bold;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+}
+
+.item-nota-row .descricao-valor {
+  font-weight: 600;
+  color: #333;
+}
+
+/* Força o html2pdf a não quebrar o card ou as linhas no meio */
+.card-resumo-saque, .item-nota-row {
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
+}

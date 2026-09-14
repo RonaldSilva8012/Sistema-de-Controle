@@ -80,6 +80,8 @@ function atualizarSomaCard(funcionarios) {
   }); 
 }
 
+let listaFuncionariosGlobal = [];
+
 // Carregamento principal da tabela do Admin Pai
 async function carregarPainelPai() {
   const tbody = document.getElementById('tabela-admins');
@@ -97,6 +99,7 @@ async function carregarPainelPai() {
     }
 
     const funcionarios = resFuncionarios.data || [];
+    listaFuncionariosGlobal = funcionarios;
     const usuarios = resUsuarios.data || [];
 
     // Atualiza a soma no Card
@@ -229,5 +232,16 @@ document.getElementById('btn-salvar-modal')?.addEventListener('click', async () 
   }
 });
 
+function irParaResumo() {
+    localStorage.setItem('dadosPassagens', JSON.stringify(listaPassagens));
+    window.location.href = 'valorTotal.html'; // Ou a rota/HTML que seu botão chama
+}
+
 // Evento de Inicialização
 document.addEventListener('DOMContentLoaded', carregarPainelPai);
+
+// Ação ao clicar no card/botão de saque para redirecionar de página
+document.getElementById('btn-saque-total')?.addEventListener('click', () => {
+  localStorage.setItem('dadosPassagens',JSON.stringify(listaFuncionariosGlobal));
+  window.location.href = 'valorTotal.html'; 
+});

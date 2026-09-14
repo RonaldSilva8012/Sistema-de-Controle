@@ -519,7 +519,7 @@ input:-webkit-autofill:active {
 
 /* Restringe e centraliza a tabela apenas na página de cálculo */
 .page-calculo table {
-  max-width: 1000px; /* Altere este valor para a largura ideal que preferir */
+  max-width: 720px; /* Altere este valor para a largura ideal que preferir */
   margin: 0 auto;    /* Centraliza a tabela na tela */
 }
 
@@ -530,16 +530,28 @@ input:-webkit-autofill:active {
 }
 
 /* Reorganiza a proporção das colunas para a página de cálculo */
-.page-calculo th:nth-child(1), .page-calculo td:nth-child(1) { width: 45%; } /* Funcionário */
-.page-calculo th:nth-child(2), .page-calculo td:nth-child(2) { width: 40%; } /* Valor */
-.page-calculo th:nth-child(3), .page-calculo td:nth-child(3) { width: 15%; } /* Ações */
+.page-calculo th:nth-child(1), .page-calculo td:nth-child(1) { width: 40%; } /* Funcionário */
+.page-calculo th:nth-child(2), .page-calculo td:nth-child(2) { width: 60%; } /* Valor */
+/* .page-calculo th:nth-child(3), .page-calculo td:nth-child(3) { width: 15%; } /*Ações */
 
+
+body.page-calculo .icone-delete-db {
+  display: none !important;
+}
+
+
+/* Permite que o texto do troco quebre linhas dentro da célula */
+.detalhe-distribuicao {
+  white-space: normal !important;
+  word-break: break-word;
+}
 
 /* Correção de Layout da Tabela no Painel Pai */
 .page-dados table {
-  width: 100%;
+  width: 70%;
   border-collapse: collapse;
   table-layout: fixed; /* Força o navegador a respeitar as larguras estipuladas */
+  margin: 0 auto; 
 }
 
 .page-dados th, 
@@ -551,7 +563,48 @@ input:-webkit-autofill:active {
 }
 
 /* Larguras exatas para cada coluna não encavalar */
-.page-dados th:nth-child(1), .page-dados td:nth-child(1) { width: 28%; text-align: left; }   /* Funcionário */
-.page-dados th:nth-child(2), .page-dados td:nth-child(2) { width: 38%; text-align: left; }   /* Cadastrado Por */
-.page-dados th:nth-child(3), .page-dados td:nth-child(3) { width: 18%; text-align: right; }  /* Valor Passagem */
-.page-dados th:nth-child(4), .page-dados td:nth-child(4) { width: 16%; text-align: center; } /* Data */
+.page-dados th:nth-child(1), .page-dados td:nth-child(1) { width: 15%; text-align: left; }   /* Funcionário */
+.page-dados th:nth-child(2), .page-dados td:nth-child(2) { width: 15%; text-align: left; }   /* Cadastrado Por */
+.page-dados th:nth-child(3), .page-dados td:nth-child(3) { width: 15%; text-align: right; }  /* Valor Passagem */
+.page-dados th:nth-child(4), .page-dados td:nth-child(4) { width: 8%; text-align: center; } /* Data */
+
+/*Dispositivos Moveis */
+
+/* Media Query para dispositivos móveis (telas de até 768px) */
+@media screen and (max-width: 768px) {
+
+  /* 1. Ajuste da Navbar para não cortar o botão "Desconectar" */
+  .top-bar {
+    padding: 10px 15px;
+    height: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .logo-container {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* 2. Libera a rolagem lateral sem cortar o conteúdo */
+  .tabela-container {
+    width: 100%;
+    overflow-x: auto; /* Cria a barra de rolagem horizontal se necessário */
+    -webkit-overflow-scrolling: touch; /* Deixa o deslizar suave no celular */
+    margin-top: 7px;
+  }
+
+  /* Force a tabela a ter um tamanho fixo legível dentro do scroll */
+  .page-dados table {
+    min-width: 350px; /* Garante que as 5 colunas caibam sem espremer */
+    table-layout: fixed;
+  }
+
+  /* Ajusta larguras no mobile para distribuir melhor */
+  .page-dados th:nth-child(1), .page-dados td:nth-child(1) { width: 25%; } /* Funcionário */
+  .page-dados th:nth-child(2), .page-dados td:nth-child(2) { width: 30%; } /* Cadastrado Por */
+  .page-dados th:nth-child(3), .page-dados td:nth-child(3) { width: 20%; } /* Valor */
+  .page-dados th:nth-child(4), .page-dados td:nth-child(4) { width: 15%; } /* Data */
+  .page-dados th:nth-child(5), .page-dados td:nth-child(5) { width: 10%; } /* Ações */
+}
