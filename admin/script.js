@@ -125,7 +125,8 @@ async function carregarPainelPai() {
       const nomeFuncionario = func.nome || 'Não informado';
       const cadastradoPor = mapaUsuarios[func.user_id] || 'Não identificado';
       const valorBruto = Number(func.valor_total ?? 0);
-      const valorFormatado = `R$ ${valorBruto.toFixed(2)}`;
+      const valorFormatado = valorBruto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      //const valorFormatado = `R$ ${valorBruto.toFixed(2)}`;
       const dataCriacao = func.created_at ? new Date(func.created_at).toLocaleDateString('pt-BR') : '-';
       const distribuicaoTroco = calcularTroco(valorBruto);
 
@@ -149,14 +150,14 @@ async function carregarPainelPai() {
         </td>
       `;
 
-      // Clique na linha para exibir/ocultar a distribuição das notas
-      tr.addEventListener('click', (e) => {
-        if (e.target.closest('.btn-editar-db') || e.target.closest('.btn-excluir-db')) return;
-        const detalhe = tr.querySelector('.detalhe-distribuicao');
-        if (detalhe) {
-          detalhe.style.display = detalhe.style.display === 'none' ? 'block' : 'none';
-        }
-      });
+      // Clique na linha para exibir/ocultar a distribuição das notas na tabela
+      // tr.addEventListener('click', (e) => {
+      //   if (e.target.closest('.btn-editar-db') || e.target.closest('.btn-excluir-db')) return;
+      //   const detalhe = tr.querySelector('.detalhe-distribuicao');
+      //   if (detalhe) {
+      //     detalhe.style.display = detalhe.style.display === 'none' ? 'block' : 'none';
+      //   }
+      // });
 
       tbody.appendChild(tr);
     });
@@ -196,11 +197,32 @@ document.addEventListener('click', async (e) => {
 
     const { data: func, error } = await _supabase.from('funcionarios_vt').select('*').eq('id', id).single();
     if (func && !error) {
+      const valorNumerico = Number(func.valor_total ?? 0);
+
       document.getElementById('edit-id-funcionario').value = func.id;
       document.getElementById('edit-nome-funcionario').value = func.nome;
       document.getElementById('edit-valor-funcionario').value = func.valor_total;
+
+      // Injeta o detalhamento formatado no elemento do modal
+      const elDistribuicao = document.getElementById('edit-distribuicao-funcionario');
+      if (elDistribuicao) {
+        elDistribuicao.innerText = calcularTroco(valorNumerico) || 'Sem detalhamento';
+      }
+
+      // Exibe o modal
       document.getElementById('modal-editar').style.display = 'flex';
+    } else {
+      alert('Erro ao carregar dados do funcionário.');
     }
+  }
+});
+
+// Atualiza o troco em tempo real dentro do modal quando o valor for alterado
+document.getElementById('edit-valor-funcionario')?.addEventListener('input', (e) => {
+  const valorDigitado = parseFloat(e.target.value) || 0;
+  const elDistribuicao = document.getElementById('edit-distribuicao-funcionario');
+  if (elDistribuicao) {
+    elDistribuicao.innerText = calcularTroco(valorDigitado) || 'Sem detalhamento';
   }
 });
 
@@ -233,8 +255,8 @@ document.getElementById('btn-salvar-modal')?.addEventListener('click', async () 
 });
 
 function irParaResumo() {
-    localStorage.setItem('dadosPassagens', JSON.stringify(listaPassagens));
-    window.location.href = 'valorTotal.html'; // Ou a rota/HTML que seu botão chama
+    localStorage.setItem('dadosPassagens', JSON.stringify(listaFuncionariosGlobal));
+    window.location.href = 'valorTotal.html';
 }
 
 // Evento de Inicialização
@@ -242,6 +264,6 @@ document.addEventListener('DOMContentLoaded', carregarPainelPai);
 
 // Ação ao clicar no card/botão de saque para redirecionar de página
 document.getElementById('btn-saque-total')?.addEventListener('click', () => {
-  localStorage.setItem('dadosPassagens',JSON.stringify(listaFuncionariosGlobal));
+  localStorage.setItem('dadosPassagens', JSON.stringify(listaFuncionariosGlobal));
   window.location.href = 'valorTotal.html'; 
 });
