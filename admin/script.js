@@ -149,16 +149,7 @@ async function carregarPainelPai() {
           </span>
         </td>
       `;
-
-      // Clique na linha para exibir/ocultar a distribuição das notas na tabela
-      // tr.addEventListener('click', (e) => {
-      //   if (e.target.closest('.btn-editar-db') || e.target.closest('.btn-excluir-db')) return;
-      //   const detalhe = tr.querySelector('.detalhe-distribuicao');
-      //   if (detalhe) {
-      //     detalhe.style.display = detalhe.style.display === 'none' ? 'block' : 'none';
-      //   }
-      // });
-
+      
       tbody.appendChild(tr);
     });
 

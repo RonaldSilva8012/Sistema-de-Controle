@@ -1,12 +1,20 @@
 const { createClient } = supabase;
 const supabaseUrl = 'https://rdhrpspqrrxrbceduwao.supabase.co';
 const supabaseKey = 'sb_publishable_WUs9ISlOBD6r1oNexYrskw_6IRJfoS6';
-const _supabase = createClient(supabaseUrl, supabaseKey);
 
-// Carrega todos os usuários e os separa por categorias
+// Define na window para que o inline do HTML consiga acessar
+window._supabase = createClient(supabaseUrl, supabaseKey);
+
 async function carregarTodosUsuarios() {
   try {
-    const { data: usuarios, error } = await _supabase
+    const tbodyPendentes = document.getElementById('tabela-pendentes');
+    const tbodyAprovados = document.getElementById('tabela-aprovados');
+    const tbodyRecusados = document.getElementById('tabela-recusados');
+
+    // Interrompe se a página atual não contiver as tabelas de aprovação (ex: painel principal)
+    if (!tbodyPendentes || !tbodyAprovados || !tbodyRecusados) return;
+
+    const { data: usuarios, error } = await window._supabase
       .from('usuarios')
       .select('*')
       .order('nome', { ascending: true });
@@ -15,10 +23,6 @@ async function carregarTodosUsuarios() {
       console.error('Erro ao buscar dados:', error);
       return;
     }
-
-    const tbodyPendentes = document.getElementById('tabela-pendentes');
-    const tbodyAprovados = document.getElementById('tabela-aprovados');
-    const tbodyRecusados = document.getElementById('tabela-recusados');
 
     tbodyPendentes.innerHTML = '';
     tbodyAprovados.innerHTML = '';
@@ -73,25 +77,26 @@ async function carregarTodosUsuarios() {
       }
     });
 
-    // Mensagens caso a lista esteja vazia
     if (qtdPendentes === 0) tbodyPendentes.innerHTML = '<tr><td colspan="4">Nenhuma solicitação pendente.</td></tr>';
     if (qtdAprovados === 0) tbodyAprovados.innerHTML = '<tr><td colspan="4">Nenhum usuário aprovado no momento.</td></tr>';
     if (qtdRecusados === 0) tbodyRecusados.innerHTML = '<tr><td colspan="4">Nenhum usuário recusado.</td></tr>';
 
-    // Atualiza os contadores
-    document.getElementById('count-pendentes').textContent = qtdPendentes;
-    document.getElementById('count-aprovados').textContent = qtdAprovados;
-    document.getElementById('count-recusados').textContent = qtdRecusados;
+    const elCountPendentes = document.getElementById('count-pendentes');
+    const elCountAprovados = document.getElementById('count-aprovados');
+    const elCountRecusados = document.getElementById('count-recusados');
+
+    if (elCountPendentes) elCountPendentes.textContent = qtdPendentes;
+    if (elCountAprovados) elCountAprovados.textContent = qtdAprovados;
+    if (elCountRecusados) elCountRecusados.textContent = qtdRecusados;
 
   } catch (err) {
     console.error('Falha de conexão com o Supabase:', err);
   }
 }
 
-// Atualiza o status de qualquer usuário instantaneamente no Supabase
 async function alterarStatus(idUsuario, novoStatus) {
   try {
-    const { error } = await _supabase
+    const { error } = await window._supabase
       .from('usuarios')
       .update({ status: novoStatus })
       .eq('id', idUsuario);
@@ -101,13 +106,10 @@ async function alterarStatus(idUsuario, novoStatus) {
       return;
     }
 
-    // Recarrega todo o painel refletindo as alterações em tempo real
     carregarTodosUsuarios();
-
   } catch (err) {
     console.error('Erro ao processar solicitação:', err);
   }
 }
 
-// Inicializa no carregamento do DOM
 document.addEventListener('DOMContentLoaded', carregarTodosUsuarios);

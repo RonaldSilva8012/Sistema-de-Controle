@@ -1,0 +1,257 @@
+ * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Josefin Sans", sans-serif;
+            
+        }
+
+
+        .josefin-sans-uniquifier {
+            font-family: "Josefin Sans", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: weight;
+            font-style: normal;
+            }
+
+
+            .user-avatar-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px; /* Reduza ou remova o padding exagerado */
+        }
+
+
+        body {
+        /* background-image: url('img/fundo.jpg'); */
+        background-size: cover;       /* Cobre toda a tela sem distorcer */
+        background-position: center;  /* Centraliza a imagem */
+        background-repeat: no-repeat; /* Não repete */
+        background-attachment: fixed; /* O fundo não rola junto com a página */
+        background-color: #f1f1f1;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Mantém centralizado na horizontal */
+        justify-content: flex-start; /* Alinha tudo colado no topo */
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        }
+
+                /* Contêiner principal */
+        .banner {
+          position: relative;
+          width: 100%;
+          height: 100vh; /* Ajuste a altura conforme necessário */
+          overflow: hidden;
+        }
+
+        /* Configuração do Vídeo de Fundo */
+        #video-fundo {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          min-width: 100%;
+          min-height: 100%;
+          width: auto;
+          height: auto;
+          z-index: 1;
+          transform: translate(-50%, -50%);
+          object-fit: cover; /* Garante que o vídeo cubra toda a área sem distorcer */
+        }
+
+        /* Conteúdo sobreposto ao vídeo */
+        .conteudo {
+          position: relative;
+          z-index: 2; /* Fica acima do vídeo */
+          color: white; /* Cor do texto para dar contraste */
+        }
+
+        header.top-bar {
+        width: 100%;
+        background-color: #ffffff;
+        border-bottom: 1px solid #eaeaea;
+        padding: 12px 0;
+        margin-bottom: 30px; /* Altere este valor para definir o espaço exato */
+        }
+        /* Limita a largura e alinha com o container principal */
+        .header-content {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start; /* Alinha à esquerda */
+        padding-left: 15%; /* Distância da borda esquerda da tela */
+        }
+
+        /* Estilização do ícone vermelho conforme a imagem */
+        .onibus-icon {
+        color: #b52727;
+        font-size: 48px !important;
+        user-select: none;
+        /* cursor: pointer; */
+        /* Garante a proporção óptica correta da fonte do Google */
+        font-variation-settings: 'OPSZ' 48;
+        }
+ /* .onibus-icon:hover {
+        color: #ff0000;
+        } */
+
+        table {
+        width: 100%;
+        border-collapse: collapse; /*permite aplicar border-radius nos cantos*/
+        border-spacing: 0;         /* Elimina os vãos entre as células */
+        table-layout: fixed;
+        font-family: "Josefin Sans", sans-serif;
+        font-size: 14px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.548);
+        }
+
+        /* Larguras específicas para cada coluna */
+        th:nth-child(1), td:nth-child(1) { width: 30%; } /* Nome */
+        th:nth-child(2), td:nth-child(2) { width: 10%; text-align: center; } /* Gênero */
+        th:nth-child(3), td:nth-child(3) { width: 25%; } /* Valor Passagem */
+        th:nth-child(4), td:nth-child(4) { width: 18%; } /* Quantidade */
+        th:nth-child(5), td:nth-child(5) { width: 17%; text-align: center; } /* Ações */
+        
+        /* Container dos múltiplos cards de valor */
+        .container-valores {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          width: 100%;
+        }
+
+                /* Coluna de ações: alinha lixeira e check lado a lado sem quebrar linha */
+        .col-acoes {
+          white-space: nowrap;
+        }
+
+      
+
+        th, td {
+        padding: 10px 14px;
+        text-align: left;
+        }
+
+        /* Cabeçalho */
+        thead tr {
+        background-color: #1a1a1a;
+        color: #ffffff;
+        }
+
+        thead th:first-child {
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px; /* Opcional: mantém a barra inteira como uma pílula */
+        }
+
+        /* Canto superior direito arredondado */
+        thead th:last-child {
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px; /* Opcional: fecha a pílula na direita */
+        }
+
+        /* Linhas ímpares (fundo base) */
+        tbody tr:nth-child(odd) {
+        background-color: #ffffff;
+        color: #222222;
+        }
+
+        /* Linhas pares (efeito zebrado) */
+        tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+        color: #222222;
+        }
+
+        /* Dica extra: destaque ao passar o mouse */
+        tbody tr:hover {
+        background-color: #e6f0fa;
+        }
+
+        .container {
+            background: #fffefe;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
+            width: 100%;
+            max-width: 450px;
+            z-index: 1;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #000000;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #4e4d4d;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s ease-in-out;
+        }
+
+        input:focus {
+            border-color: #4a90e2;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 15px 0 20px 0;
+            font-size: 13px;
+            color: #666;
+        }
+
+    button {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    padding: 10px 30px 10px;
+    border-radius: 10%;
+    align-items: center;
+}
+
+.botao-calcular {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #d80808;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 50px;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 14px;
+  text-align: center;
+  font-weight: bold;
+}
+
+
+
+
+

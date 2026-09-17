@@ -11,25 +11,44 @@
 </head>
 <body class="page-dados">
 
-  <header class="top-bar">
-    <div class="logo-container">
-      <span class="material-symbols-outlined onibus-icon">directions_bus</span>
-      <span class="nome-sistema">TRANSPORED</span>
-    </div>
-    <nav class="nav-links">
-      <ul>
-        <li>
-          <a href="aprovacao.html" class="nav-item">Aprovações</a>
-        </li>
-        <li>
-          <a href="index.html" id="btn-logout" class="btn-sair">
-            <span class="material-symbols-outlined icone-sair">logout</span>
-            <span>Desconectar</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </header>
+  <style>
+    
+    h2{
+      font-size: 1.4rem;
+    }
+    @media screen and (max-width: 768px) {
+   
+      h2 {
+        font-size: 18px !important; 
+      }
+    }
+    
+  </style>
+
+ <header class="top-bar">
+  <div class="logo-container">
+    <span class="material-symbols-outlined onibus-icon">directions_bus</span>
+    <span class="nome-sistema">TRANSPORED</span>
+  </div>
+
+  <nav class="nav-links">
+    <ul>
+      <li>
+        <a href="aprovacao.html" class="btn-notificacao">
+          <span class="material-symbols-outlined" id="icone-sininho">notifications</span>
+          <span>Aprovações</span>
+          <span class="badge-count" id="contador-pendentes">0</span>
+        </a>
+      </li>
+      <li>
+        <a href="index.html" id="btn-logout" class="btn-sair">
+          <span class="material-symbols-outlined icone-sair">logout</span>
+          <span>Desconectar</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
 
   <main class="container-painel" style="max-width: 600px; margin: 40px auto; padding: 0 20px;">
     
@@ -40,7 +59,7 @@
         <a href="dados.html" style="text-decoration: none; color: #666; font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 4px;">
           <span class="material-symbols-outlined" style="font-size: 1.1rem;">arrow_back</span> Voltar
         </a>
-        <h2 style="margin: 0; color: #111; font-size: 1.4rem;">Distribuição Total para Saque</h2>
+        <h2 style="margin: 0; color: #111;">Distribuição Total para Saque</h2>
       </div>
 
       <!-- Botão para Baixar PDF -->
@@ -61,8 +80,53 @@
   <!-- Biblioteca html2pdf CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   
-  <!-- Script do Resumo -->
-  <script src="resumo.js"></script>
+<!-- Script do Resumo -->
+<script src="resumo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+    async function atualizarContadorPendentes() {
+    try {
+      const SUPABASE_URL = 'https://rdhrpspqrrxrbceduwao.supabase.co';
+      const SUPABASE_KEY = 'sb_publishable_WUs9ISlOBD6r1oNexYrskw_6IRJfoS6';
+      
+      const clienteSupabase = window._supabase || supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+      const { count, error } = await clienteSupabase
+        .from('usuarios')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'pendente');
+
+      if (error) throw error;
+
+      const badgeElement = document.getElementById('contador-pendentes');
+      const iconeSininho = document.getElementById('icone-sininho');
+
+      if (count > 0) {
+        // Se houver pendências: exibe o badge e ativa o ícone animado/ativo
+        if (badgeElement) {
+          badgeElement.textContent = count;
+          badgeElement.style.display = 'inline-block';
+        }
+        if (iconeSininho) {
+          iconeSininho.textContent = 'notifications_active';
+        }
+      } else {
+        // Se não houver pendências: oculta o badge e volta ao ícone padrão
+        if (badgeElement) {
+          badgeElement.style.display = 'none';
+        }
+        if (iconeSininho) {
+          iconeSininho.textContent = 'notifications';
+        }
+      }
+    } catch (err) {
+      console.error('Erro ao carregar solicitações pendentes:', err.message);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', atualizarContadorPendentes);
+</script>
 
 </body>
 </html>

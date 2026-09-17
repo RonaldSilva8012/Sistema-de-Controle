@@ -9,29 +9,33 @@
   <title>Painel do Usuário Chefe</title>
 </head>
 <body class="page-dados">
+<header class="top-bar">
+  <div class="logo-container">
+    <span class="material-symbols-outlined onibus-icon">directions_bus</span>
+    <span class="nome-sistema">TRANSPORED</span>
+  </div>
 
-  <header class="top-bar">
-    <div class="logo-container">
-      <span class="material-symbols-outlined onibus-icon">directions_bus</span>
-      <span class="nome-sistema" style="@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');">TRANSPORED</span>
-    </div>
-    <nav class="nav-links">
-      <ul>
-        <li>
-          <a href="aprovacao.html" class="nav-item">Aprovações</a>
-        </li>
-        <li>
-          <a href="index.html" id="btn-logout" class="btn-sair">
-            <span class="material-symbols-outlined icone-sair">logout</span>
-            <span>Desconectar</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </header>
+  <nav class="nav-links">
+    <ul>
+      <li>
+        <a href="aprovacao.html" class="btn-notificacao">
+          <span class="material-symbols-outlined" id="icone-sininho">notifications</span>
+          <span>Aprovações</span>
+          <span class="badge-count" id="contador-pendentes">0</span>
+        </a>
+      </li>
+      <li>
+        <a href="index.html" id="btn-logout" class="btn-sair">
+          <span class="material-symbols-outlined icone-sair">logout</span>
+          <span>Desconectar</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
 
   <main class="container-painel">
-    <h2>Gerenciamento de Administradores</h2>
+    <h2>Gerenciar Administradores</h2>
     
     <div class="tabela-container">
 
@@ -91,8 +95,52 @@
   </div>
 </div>
 
-  <!-- CDN Oficial do Supabase -->
+<!-- CDN do Supabase (Mantenha antes do script) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="script.js"></script>
+
+  <script>
+    async function atualizarContadorPendentes() {
+    try {
+      const SUPABASE_URL = 'https://rdhrpspqrrxrbceduwao.supabase.co';
+      const SUPABASE_KEY = 'sb_publishable_WUs9ISlOBD6r1oNexYrskw_6IRJfoS6';
+      
+      const clienteSupabase = window._supabase || supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+      const { count, error } = await clienteSupabase
+        .from('usuarios')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'pendente');
+
+      if (error) throw error;
+
+      const badgeElement = document.getElementById('contador-pendentes');
+      const iconeSininho = document.getElementById('icone-sininho');
+
+      if (count > 0) {
+        // Se houver pendências: exibe o badge e ativa o ícone animado/ativo
+        if (badgeElement) {
+          badgeElement.textContent = count;
+          badgeElement.style.display = 'inline-block';
+        }
+        if (iconeSininho) {
+          iconeSininho.textContent = 'notifications_active';
+        }
+      } else {
+        // Se não houver pendências: oculta o badge e volta ao ícone padrão
+        if (badgeElement) {
+          badgeElement.style.display = 'none';
+        }
+        if (iconeSininho) {
+          iconeSininho.textContent = 'notifications';
+        }
+      }
+    } catch (err) {
+      console.error('Erro ao carregar solicitações pendentes:', err.message);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', atualizarContadorPendentes);
+  </script>
 </body>
 </html>

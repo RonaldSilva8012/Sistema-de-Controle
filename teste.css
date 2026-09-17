@@ -1,0 +1,709 @@
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Josefin Sans", sans-serif;
+            
+        }
+
+
+        .josefin-sans-uniquifier {
+            font-family: "Josefin Sans", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: weight;
+            font-style: normal;
+            }
+
+
+            .user-avatar-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px; /* Reduza ou remova o padding exagerado */
+        }
+
+
+        body {
+        /* background-image: url('img/fundo.jpg'); */
+        background-size: cover;       /* Cobre toda a tela sem distorcer */
+        background-position: center;  /* Centraliza a imagem */
+        background-repeat: no-repeat; /* Não repete */
+        background-attachment: fixed; /* O fundo não rola junto com a página */
+        background-color: #f1f1f1;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Mantém centralizado na horizontal */
+        justify-content: flex-start; /* Alinha tudo colado no topo */
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        }
+
+                /* Contêiner principal */
+        .banner {
+          position: relative;
+          width: 100%;
+          height: 100vh; /* Ajuste a altura conforme necessário */
+          overflow: hidden;
+        }
+
+        /* Configuração do Vídeo de Fundo */
+        #video-fundo {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          min-width: 100%;
+          min-height: 100%;
+          width: auto;
+          height: auto;
+          z-index: 1;
+          transform: translate(-50%, -50%);
+          object-fit: cover; /* Garante que o vídeo cubra toda a área sem distorcer */
+        }
+
+        /* Conteúdo sobreposto ao vídeo */
+        .conteudo {
+          position: relative;
+          z-index: 2; /* Fica acima do vídeo */
+          color: white; /* Cor do texto para dar contraste */
+        }
+
+       header.top-bar {
+        width: 100%;
+        background-color: #ffffff;
+        border-bottom: 1px solid #eaeaea;
+        padding: 12px 0;
+        margin-bottom: 30px; /* Altere este valor para definir o espaço exato */
+        }
+        /* Limita a largura e alinha com o container principal */
+        .header-content {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start; /* Alinha à esquerda */
+        padding-left: 15%; /* Distância da borda esquerda da tela */
+        }
+
+        /* Estilização do ícone vermelho conforme a imagem */
+        .onibus-icon {
+        color: #b52727;
+        font-size: 48px !important;
+        user-select: none;
+        /* cursor: pointer; */
+        /* Garante a proporção óptica correta da fonte do Google */
+        font-variation-settings: 'OPSZ' 48;
+        }
+
+        /* .onibus-icon:hover {
+        color: #ff0000;
+        } */
+
+        table {
+        width: 100%;
+        border-collapse: collapse; /*permite aplicar border-radius nos cantos*/
+        border-spacing: 0;         /* Elimina os vãos entre as células */
+        table-layout: fixed;
+        font-family: "Josefin Sans", sans-serif;
+        font-size: 14px;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.548);
+        }
+
+        /* Larguras específicas para cada coluna */
+        th:nth-child(1), td:nth-child(1) { width: 30%; } /* Nome */
+        th:nth-child(2), td:nth-child(2) { width: 10%; text-align: center; } /* Gênero */
+        th:nth-child(3), td:nth-child(3) { width: 25%; } /* Valor Passagem */
+        th:nth-child(4), td:nth-child(4) { width: 18%; } /* Quantidade */
+        th:nth-child(5), td:nth-child(5) { width: 17%; text-align: center; } /* Ações */
+        
+        /* Container dos múltiplos cards de valor */
+        .container-valores {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          width: 100%;
+        }
+
+                /* Coluna de ações: alinha lixeira e check lado a lado sem quebrar linha */
+        .col-acoes {
+          white-space: nowrap;
+        }
+
+      
+
+        th, td {
+        padding: 10px 14px;
+        text-align: left;
+        }
+
+        /* Cabeçalho */
+        thead tr {
+        background-color: #1a1a1a;
+        color: #ffffff;
+        }
+
+        thead th:first-child {
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px; /* Opcional: mantém a barra inteira como uma pílula */
+        }
+
+        /* Canto superior direito arredondado */
+        thead th:last-child {
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px; /* Opcional: fecha a pílula na direita */
+        }
+
+        /* Linhas ímpares (fundo base) */
+        tbody tr:nth-child(odd) {
+        background-color: #ffffff;
+        color: #222222;
+        }
+
+        /* Linhas pares (efeito zebrado) */
+        tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+        color: #222222;
+        }
+
+        /* Dica extra: destaque ao passar o mouse */
+        tbody tr:hover {
+        background-color: #e6f0fa;
+        }
+
+        .container {
+            background: #fffefe;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
+            width: 100%;
+            max-width: 450px;
+            z-index: 1;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #000000;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #4e4d4d;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s ease-in-out;
+        }
+
+        input:focus {
+            border-color: #4a90e2;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 15px 0 20px 0;
+            font-size: 13px;
+            color: #666;
+        }
+
+    button {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border: none;
+    padding: 10px 30px 10px;
+    border-radius: 10%;
+    align-items: center;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button.adicionar {
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 50px;
+    font-family: "Josefin Sans", sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+button.adicionar:hover {
+    background-color: #1e7e34;
+}
+
+.botao-calcular {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #d80808;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 50px;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 14px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.botao-calcular:hover {
+  background-color: #b30000;
+}
+
+header {
+  padding: 10px 0;
+  text-align: center;
+
+}
+
+.onibus {
+  display: flex;
+  justify-content: left;
+  margin-bottom: 80px;
+}
+
+.icone-delete {
+  font-family: 'Material Symbols Outlined' !important;
+  font-size: 25px !important; /* Defina aqui o tamanho desejado (ex: 18px, 20px, 24px) */
+  color: #dc3545;              /* Vermelho para ação de remover */
+  cursor: pointer;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.icone-delete:hover {
+  color: #a71d2a;
+  transform: scale(1.1); /* Efeito suave de destaque ao passar o mouse */
+}
+
+/* Container relativo para guiar o posicionamento do balão */
+.tooltip-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* O balão de legenda escondido por padrão */
+.tooltip-container::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 125%; /* Posição logo acima do ícone */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333333;
+  color: #ffffff;
+  padding: 4px 8px;
+  font-size: 11px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+/* Mostra o balão ao passar o mouse */
+.tooltip-container:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-2px);
+}
+
+/* Entradas digitáveis dentro da tabela */
+.input-tabela {
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 14px;
+  font-family: "Josefin Sans", sans-serif;
+  outline: none;
+  background-color: #ffffff;
+}
+
+.input-nome {
+  width: 90%;
+}
+
+.input-valor-group {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  background-color: #f7f7f7;
+}
+
+.prefixo-moeda {
+  padding: 6px 8px;
+  font-size: 13px;
+  color: #777;
+  border-right: 1px solid #dcdcdc;
+  user-select: none;
+}
+
+.input-valor {
+  border: none;
+  background: transparent;
+  width: 90px;
+}
+
+.icone-edit {
+  font-family: 'Material Symbols Outlined' !important;
+  font-size: 24px !important;
+  color: #555555;
+  cursor: pointer;
+  user-select: none;
+  margin-left: 6px;
+  transition: color 0.2s ease;
+}
+
+.icone-edit:hover {
+  color: #007bff;
+}
+
+/* Estilo para inputs desativados */
+.input-tabela:disabled {
+  background-color: transparent;
+  border-color: transparent;
+  color: #333333;
+  cursor: default;
+}
+
+.input-valor-group:has(.input-valor:disabled) {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.input-valor-group:has(.input-valor:disabled) .prefixo-moeda {
+  border-right-color: transparent;
+  background-color: transparent;
+}
+
+/* Remove a cor azul de preenchimento automático do Chrome/Edge */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  -webkit-text-fill-color: #333333 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+#valor-total {
+  font-weight: bold;
+  color: #d80808;
+  font-size: 16px;
+}
+
+.genero-tag {
+  font-weight: 600;
+  font-size: 13px;
+  color: #555555;
+}
+
+.top-bar {
+  width: 100%;
+  height: 65px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-container .onibus-icon {
+  font-size: 30px;
+  color: #b71c1c;
+}
+
+.nome-sistema {
+  font-size: 17px;
+  font-weight: 700;
+  color: #222222;
+}
+
+.nav-links ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  list-style: none;
+}
+
+.nav-item {
+  text-decoration: none;
+  color: #444444;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: bold;
+}
+
+.nav-item:hover {
+  color: #d32f2f;
+  font-weight: 600;
+}
+
+.btn-sair {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #d32f2f;
+  background-color: #ffebee;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: 0.2s ease;
+}
+
+.btn-sair:hover {
+  background-color: #d32f2f;
+  color: #ffffff;
+}
+
+.icone-sair {
+  font-size: 18px;
+}
+
+/* Restringe e centraliza a tabela apenas na página de cálculo */
+.page-calculo table {
+  max-width: 720px; /* Altere este valor para a largura ideal que preferir */
+  margin: 0 auto;    /* Centraliza a tabela na tela */
+}
+
+/* Ajusta o espaçamento interno das células para compactar as linhas */
+.page-calculo th, 
+.page-calculo td {
+  padding: 8px 12px;
+}
+
+/* Reorganiza a proporção das colunas para a página de cálculo */
+.page-calculo th:nth-child(1), .page-calculo td:nth-child(1) { width: 40%; } /* Funcionário */
+.page-calculo th:nth-child(2), .page-calculo td:nth-child(2) { width: 60%; } /* Valor */
+/* .page-calculo th:nth-child(3), .page-calculo td:nth-child(3) { width: 15%; } /*Ações */
+
+
+body.page-calculo .icone-delete-db {
+  display: none !important;
+}
+
+
+/* Permite que o texto do troco quebre linhas dentro da célula */
+.detalhe-distribuicao {
+  white-space: normal !important;
+  word-break: break-word;
+}
+
+/* Correção de Layout da Tabela no Painel Pai */
+.page-dados table {
+  width: 70%;
+  border-collapse: collapse;
+  table-layout: fixed; /* Força o navegador a respeitar as larguras estipuladas */
+  margin: 0 auto; 
+}
+
+.page-dados th, 
+.page-dados td {
+  padding: 12px 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* Evita quebra de linha estranha */
+}
+
+/* Larguras exatas para cada coluna não encavalar */
+.page-dados th:nth-child(1), .page-dados td:nth-child(1) { width: 15%; text-align: left; }   /* Funcionário */
+.page-dados th:nth-child(2), .page-dados td:nth-child(2) { width: 15%; text-align: left; }   /* Cadastrado Por */
+.page-dados th:nth-child(3), .page-dados td:nth-child(3) { width: 15%; text-align: right; }  /* Valor Passagem */
+.page-dados th:nth-child(4), .page-dados td:nth-child(4) { width: 8%; text-align: center; } /* Data */
+
+/*Dispositivos Moveis */
+
+/* Media Query para dispositivos móveis (telas de até 768px) */
+/* ==========================================
+   DISPOSITIVOS MÓVEIS (até 768px)
+   ========================================== */
+@media screen and (max-width: 768px) {
+
+  body {
+    padding: 10px;
+    padding-bottom: 70px; /* Evita que o botão fixo do rodapé cubra o conteúdo */
+  }
+
+  /* Transformar Tabela e Tbody em Layout Flexível */
+  table, tbody, tfoot {
+    display: block;
+    width: 100%;
+  }
+
+  /* Ocultar o cabeçalho original da tabela */
+  thead {
+    display: none;
+  }
+
+  /* Cada linha vira um CARTÃO (Card) no celular */
+  tr.linha-dado {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e5e5;
+    position: relative;
+  }
+
+  /* Células dentro do Cartão */
+  tr.linha-dado td {
+    display: block;
+    width: 100% !important; /* Força 100% para sobrescrever as regras de colunas desktop */
+    padding: 6px 0;
+  }
+
+  /* Rótulos dinâmicos (Labels) para cada campo no mobile */
+  tr.linha-dado td:nth-child(1)::before { content: "Nome do funcionário"; }
+  tr.linha-dado td:nth-child(2)::before { content: "Gênero"; }
+  tr.linha-dado td:nth-child(3)::before { content: "Valor da passagem"; }
+  tr.linha-dado td:nth-child(4)::before { content: "Quantidade de ônibus"; }
+
+  tr.linha-dado td::before {
+    display: block;
+    font-weight: bold;
+    font-size: 13px;
+    color: #444;
+    margin-bottom: 4px;
+  }
+
+  /* Posiciona as Ações (Lixeira/Salvar) no topo superior direito do Card */
+  tr.linha-dado td.col-acoes {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: auto !important;
+    padding: 0;
+    display: flex;
+    gap: 8px;
+  }
+
+  tr.linha-dado td.col-acoes::before {
+    display: none;
+  }
+
+  /* Estilização dos ícones no Mobile */
+  .icone-delete, .icone-edit {
+    padding: 6px;
+    font-size: 22px;
+  }
+
+  /* Linha e Célula do botão Adicionar ocupando 100% */
+  tr.linha-adicionar,
+  tr.linha-adicionar td {
+    display: block;
+    width: 100% !important;
+    padding: 0;
+  }
+
+  /* Botão Verde ocupando toda a extensão */
+  button.adicionar {
+    display: block;
+    width: 100%;
+    padding: 14px 0;
+    box-sizing: border-box;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 0;
+    text-decoration: none;
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  /* Estilização do Rodapé / Totais */
+  tfoot {
+    background-color: transparent;
+    margin-top: 10px;
+  }
+
+  tfoot tr td {
+    display: block;
+    padding: 8px 0;
+    text-align: left;
+    width: 100% !important;
+  }
+
+  #valor-total {
+    color: #cc0000;
+    font-weight: bold;
+  }
+
+  .linha-calcular td {
+    padding-top: 12px;
+  }
+
+  /* Botão Vermelho Fixo no Rodapé da Tela */
+  .botao-calcular {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 0 !important;
+    padding: 16px 0;
+    background-color: #d80808;
+    color: #ffffff;
+    text-decoration: none;
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+    z-index: 1000;
+  }
+
+}
